@@ -1,5 +1,6 @@
 # BGBRowse
-- *Better Git Browse*
+- simple client for browsing github repos made in Astro
+- BGBrowse stands for *Better Git Browse*
 ![demo png](./demo.png)
 
 ## specify user
