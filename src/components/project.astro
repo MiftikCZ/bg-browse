@@ -1,0 +1,76 @@
+---
+export interface Props {
+	title: string;
+	description: string;
+	stars: number;
+	link: string;
+}
+
+const { title, description, stars, link } = Astro.props;
+---
+
+<div class="card">
+	<a href={link} target="_blank">
+		<span class="flex">
+			<span class={`title ${stars < 0.1 ? "zero_title" : ""}`}>
+				{title}
+			</span>
+			<br />
+			<span class="stars">
+				{stars > 0.1 ? <>
+				⭐ {stars}
+				</> : <span class="zero">
+				0
+				</span>}
+			</span>
+		</span>
+
+		<span class="desc">
+			{description}
+		</span>
+	</a>
+</div>
+<style>
+	.card {
+		border-radius: 0.1em;
+		box-shadow: #ccc 2px 2px 2px;
+		border: #fff5 1px solid;
+		padding: 0.5em;
+		background: #ccc;
+	}
+
+	.card a {
+		text-decoration: none;
+	}
+
+	.card .title {
+		width: 100%;
+		font-size: 1.25em;
+		font-weight: bold;
+		color: #000;
+	}
+
+	.card .desc {
+		color: #222;
+	}
+
+	.card .stars {
+		flex-shrink: 0;
+		font-weight: bold;
+		color: #228;
+	}
+
+	.card .flex {
+		gap: 0.25em;
+		display: flex;
+		flex-direction: row;
+	}
+
+	.card .zero {
+		opacity: 20%;
+	}
+
+	.card .zero_title {
+		color: #0009;
+	}
+</style>

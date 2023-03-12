@@ -1,0 +1,60 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Project from '../components/project.astro';
+
+let user = new URLSearchParams(Astro.url.search).get("name") || "MiftikCZ"
+// let test = "server"
+let projects = await (await fetch("https://api.github.com/users/"+user+"/repos")).json()
+if(projects.message?.includes("rate")) {
+	projects = {"0":{
+		stargazers_count: 999,
+		name: "YOU GOT",
+		description: "RATELIMITED",
+		html_url: "https://miftik.tk"
+	}}
+}
+---
+
+<Layout title="Welcome to Astro.">
+	<main>
+		<h1>Browse <span class="text-gradient">{user}</span>'s git</h1>
+		<div class="link-card-grid">
+			{Object.values(projects).sort((a:any,b:any)=>
+			b.stargazers_count-a.stargazers_count + !!b.description - !!a.description
+			).map((obj:any) => {
+				return <Project title={obj.name} description={obj.description} stars={obj.stargazers_count} link={obj.html_url}/>
+			})}
+		</div>
+	</main>
+</Layout>
+<script>
+	export var test = "client"
+</script>
+<style>
+	main {
+		margin: auto;
+		padding: 1.5rem;
+		max-width: 70ch;
+		gap: 1.25em;
+		display: flex;
+		flex-direction: column;
+	}
+	h1 {
+		font-size: 3rem;
+		font-weight: 800;
+		margin: 0;
+	}
+	.text-gradient {
+		background-image: var(--accent-gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 400%;
+		background-position: 0%;
+	}
+	
+	.link-card-grid {
+		gap: 10px;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+	}
+</style>
