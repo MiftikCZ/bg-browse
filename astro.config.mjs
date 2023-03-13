@@ -4,8 +4,9 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
     output: "static",
     outDir: "docs",
-    base: ".",
+    base: "./",
+    root: "./",
     vite: {
-        base:"."
+        base:"./"
     }
 });
